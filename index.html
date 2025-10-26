@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nosifer&display=swap" rel="stylesheet">
+    <title>Sung Jinwoo</title>
+    <style>
+        body, html{
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: Montserrat, sans-serif;
+        }
+
+        .first_block {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        #myVideo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1000;
+        }
+        
+        .third_block {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        #myVideo2 {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1000;
+        }
+
+        .footer{
+            display: flex;
+            position: absolute;
+            left: 34%;
+            top: 3%;
+            color: white;
+            width: 450px;
+            height: 40px;
+            border: 3px solid rgb(255, 255, 255);
+            border-radius: 20px;
+            padding-top: 12px;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.8s ease;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .footer.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .texts_block{
+            z-index: 1000;
+        }
+
+        .header-block{
+            font-family: 'Nosifer', cursive;
+            font-size: 4rem;
+            color: #00ffff;
+            margin-bottom: 30px;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.7);
+            opacity: 0;
+        }
+
+        .first{
+            font-family: Montserrat, serif;
+            font-weight: 700;
+            font-size: 20px;
+            padding-left: 25px;
+            transition: 1s;
+        }
+
+        .first:hover{
+            color: red;
+            cursor: pointer;
+        }
+
+        .second{
+            font-family: Montserrat, serif;
+            font-weight: 700;
+            font-size: 20px;
+            padding-left: 45px;
+            transition: 1s;
+        }
+
+        .second:hover{
+            color: red;
+            cursor: pointer;
+        }
+
+        .third{
+            font-family: Montserrat, serif;
+            font-weight: 700;
+            font-size: 20px;
+            padding-left: 45px;
+            transition: 1s;
+        }
+
+        .third:hover{
+            color: red;
+            cursor: pointer;
+        }
+
+        .four{
+            font-family: Montserrat, sans-serif;
+            font-weight: 700;
+            font-size: 20px;
+            padding-left: 45px;
+            transition: 1s;
+        }
+
+        .four:hover{
+            color: red;
+            cursor: pointer;
+        }
+
+        .name{
+            font-family: Montserrat, serif;
+            font-size: 125px;
+            font-weight: 600;
+            position: absolute;
+            top: 48%;
+            left: 5%;
+            color: aliceblue;
+        }
+
+        .name-line {
+            display: block;
+            line-height: 1.2;
+        }
+
+        .letter {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.5s ease;
+        }
+
+        .letter.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .space {
+            display: inline-block;
+            width: 20px;
+        }
+
+        /* Стили для галереи */
+        .gallery-section {
+            background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+            padding: 20px 0;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .gallery-header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            margin: 0 0 20px 28%;
+            padding: 5px;
+            width: 40%;
+            text-align: center;
+            opacity: 0;
+            transform: translateX(-100px) rotate(-5deg) scale(0.8);
+        }
+
+        .gallery-header.visible {
+            animation: headerAppear 1.5s ease-out forwards;
+        }
+
+        @keyframes headerAppear {
+            0% {
+                opacity: 0;
+                transform: translateX(-100px) rotate(-5deg) scale(0.8);
+            }
+            60% {
+                opacity: 1;
+                transform: translateX(20px) rotate(2deg) scale(1.05);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) rotate(0) scale(1);
+            }
+        }
+
+        .title-letters {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .title-letters.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .header-content h1 {
+            font-family: 'Nosifer', cursive;
+            font-size: 2.5rem;
+            color: #e94560;
+            margin-bottom: -5px;
+            text-shadow: 0 0 10px rgba(233, 69, 96, 0.5);
+        }
+
+        .header-content p {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            color: #ffffff;
+            line-height: 1.5;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease 1s;
+        }
+
+        .header-content p.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .gallery-container {
+            overflow: hidden;
+            position: relative;
+            padding: 10px 0;
+            width: 100%;
+        }
+
+        .photo-row_moving-right,
+        .photo-row_moving-left {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 25px;
+            width: max-content;
+        }
+
+        .photo-row_moving-right {
+            animation: moveRight 40s linear infinite;
+        }
+
+        .photo-row_moving-left {
+            animation: moveLeft 40s linear infinite;
+        }
+
+        .photo-item {
+            flex: 0 0 250px;
+            height: 220px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+            transition: transform 0.3s ease;
+        }
+
+        .photo {
+            width: 100%;
+            height: 100%;
+        }
+
+        @keyframes moveRight {
+            0% {
+                transform: translateX(-80%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        @keyframes moveLeft {
+            0% {
+                transform: translateX(62%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        /* Стили для третьего блока */
+        .texts_block {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 1000;
+            width: 80%;
+            max-width: 900px;
+        }
+
+        @keyframes neonRise {
+            0% {
+                opacity: 0;
+                transform: translateY(100px) scale(0.8);
+                text-shadow: 0 0 0px rgba(0, 255, 255, 0);
+            }
+            50% {
+                text-shadow: 0 0 30px rgba(0, 255, 255, 0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                text-shadow: 0 0 20px rgba(0, 255, 255, 0.7),
+                             0 0 40px rgba(0, 255, 255, 0.5);
+            }
+        }
+
+        .bio-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2rem;
+            color: #ffffff;
+            line-height: 1.6;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(15px);
+            padding: 50px;
+            border-radius: 15px;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+        }
+
+        .word {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: wordAppear 0.6s ease-out forwards;
+        }
+
+        @keyframes wordAppear {
+            0% {
+                opacity: 0;
+                transform: translateY(20px) rotateX(-90deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) rotateX(0);
+            }
+        }
+
+        .word-space {
+            display: inline-block;
+            width: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="first_block">
+        <div class="video_block">
+            <video autoplay muted loop id="myVideo">
+                <source src="second.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="footer">
+            <div class="first">biography</div>
+            <div class="second">rang</div>
+            <div class="third">fights</div>
+            <div class="four">aura</div>
+        </div>
+        <div class="name">
+            <span class="name-line" id="firstLine"></span>
+            <span class="name-line" id="secondLine"></span>
+        </div>
+    </div>
+
+    <div class="gallery-section">
+        <div class="gallery-header">
+            <div class="header-content">
+                <h1 id="soloLevelingTitle"></h1>
+                <p id="descriptionText">Immerse yourself in the world of hunters and gates, where the weakest hunter, Sung Jinwoo, receives a unique system that allows him to grow without limits. From hopeless E-rank to the mighty Shadow Monarch - follow the epic journey of becoming a legend.</p>
+            </div>
+        </div>
+        
+        <div class="gallery-container">
+            <div class="photo-row_moving-right">
+                <div class="photo-item">
+                    <img class="photo" src="загруженное (14).jfif" alt="Solo Leveling image 1">
+                </div>
+                <div class="photo-item">
+                    <img class="photo" src="загруженное (13).jfif" alt="Solo Leveling image 2">
+                </div>
+                <div class="photo-item">
+                    <img class="photo" src="загруженное (12).jfif" alt="Solo Leveling image 3">
+                </div>
+                <div class="photo-item">
+                    <img class="photo" src="загруженное (11).jfif" alt="Solo Leveling image 4">
+                </div>
+                <div class="photo-item">
+                    <img class="photo" src="загруженное (10).jfif" alt="Solo Leveling image 5">
+                </div>
+                <div class="photo-item">
+                    <img class="photo" src="загруженное (14).jfif" alt="Solo Leveling image 6">
+                </div>
+            </div>
+            
+            <div class="photo-row_moving-left">
+                <div class="photo-item">
+                    <img class="photo" src="Credit_ 𝐀zα࣪z𝗲̫̄l.jfif" alt="Solo Leveling image 7">
+                </div>
+                <div class="photo-item">
+                    <img class="photo" src="𝓒𝓱𝓪 𝓗𝓪𝓮-𝓘𝓷.jfif" alt="Solo Leveling image 8">
+                </div>
+                <div class="photo-item">
+                    <img class="photo" src="Beru.jfif" alt="Solo Leveling image 9">
+                </div>
+                <div class="photo-item">
+                    <img class="photo" src="загруженное (13).jfif" alt="Solo Leveling image 10">
+                </div>
+                <div class="photo-item">
+                    <img class="photo" src="загруженное (12).jfif" alt="Solo Leveling image 11">
+                </div>
+                <div class="photo-item">
+                    <img class="photo" src="загруженное (11).jfif" alt="Solo Leveling image 12">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="third_block">
+        <div class="video_block">
+            <video autoplay muted loop id="myVideo2">
+                <source src="videos.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="texts_block">
+            <p class="header-block">SHADOW MONARCH</p>
+            <div class="bio-text" id="animatedBio"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstLine = document.getElementById('firstLine');
+            const secondLine = document.getElementById('secondLine');
+            const footer = document.querySelector('.footer');
+            const soloLevelingTitle = document.getElementById('soloLevelingTitle');
+            const descriptionText = document.getElementById('descriptionText');
+            
+            // Создаем буквы для имени Sung Jinwoo
+            function createNameLetters() {
+                // Первая строка - "Sung"
+                const sungLetters = ['S', 'u', 'n', 'g'];
+                sungLetters.forEach(letter => {
+                    const span = document.createElement('span');
+                    span.className = 'letter';
+                    span.textContent = letter;
+                    firstLine.appendChild(span);
+                });
+                
+                // Вторая строка - "Jinwoo"
+                const jinwooLetters = ['J', 'i', 'n', 'w', 'o', 'o'];
+                jinwooLetters.forEach(letter => {
+                    const span = document.createElement('span');
+                    span.className = 'letter';
+                    span.textContent = letter;
+                    secondLine.appendChild(span);
+                });
+            }
+            
+            // Создаем буквы для Solo Leveling
+            function createTitleLetters() {
+                const title = "Solo Leveling";
+                const letters = title.split('');
+                
+                letters.forEach(letter => {
+                    const span = document.createElement('span');
+                    span.className = 'title-letters';
+                    if (letter === ' ') {
+                        span.innerHTML = '&nbsp;';
+                    } else {
+                        span.textContent = letter;
+                    }
+                    span.style.animationDelay = `${Math.random() * 0.5}s`;
+                    soloLevelingTitle.appendChild(span);
+                });
+            }
+            
+            // Функция для анимированного появления биографии
+            function animateBiography() {
+                const bioText = `Sung Jinwoo, known as the Shadow Monarch, began as the weakest E-rank hunter in South Korea. His life changed forever when he was trapped in a dangerous double dungeon and selected as the sole player of a mysterious System. This granted him the unique ability to grow infinitely stronger through quests, leveling up, and skill acquisition. Through relentless training and countless battles, Jinwoo evolved from a vulnerable hunter into the most powerful being on Earth. As the Shadow Monarch, he commands an army of shadow soldiers extracted from defeated enemies, possesses teleportation abilities, superhuman strength, and near-invincibility. His cold exterior hides a deeply protective nature, especially toward his sister and close allies. Jinwoo's journey represents the ultimate underdog story, transforming from a helpless victim into the savior of humanity against interdimensional threats.`;
+                
+                const bioContainer = document.getElementById('animatedBio');
+                const words = bioText.split(' ');
+                
+                words.forEach((word, index) => {
+                    const wordSpan = document.createElement('span');
+                    wordSpan.className = 'word';
+                    wordSpan.textContent = word;
+                    wordSpan.style.animationDelay = `${index * 0.08}s`;
+                    
+                    bioContainer.appendChild(wordSpan);
+                    
+                    // Добавляем пробелы между словами
+                    if (index < words.length - 1) {
+                        const space = document.createElement('span');
+                        space.className = 'word-space';
+                        space.innerHTML = ' ';
+                        bioContainer.appendChild(space);
+                    }
+                });
+            }
+            
+            // Анимируем появление букв имени
+            function animateName() {
+                const letters = document.querySelectorAll('.letter');
+                
+                letters.forEach((letter, index) => {
+                    setTimeout(() => {
+                        letter.classList.add('visible');
+                    }, index * 150);
+                });
+            }
+            
+            // Анимируем появление заголовка Solo Leveling
+            function animateTitle() {
+                const titleLetters = document.querySelectorAll('.title-letters');
+                
+                titleLetters.forEach((letter, index) => {
+                    setTimeout(() => {
+                        letter.classList.add('visible');
+                        letter.style.animation = `textGlow 0.6s ease-out ${index * 0.1}s forwards`;
+                    }, index * 100);
+                });
+                
+                // Анимируем появление описания после заголовка
+                setTimeout(() => {
+                    descriptionText.classList.add('visible');
+                }, titleLetters.length * 100 + 500);
+            }
+            
+            // Анимируем появление футера
+            function animateFooter() {
+                footer.classList.add('visible');
+            }
+            
+            // Инициализация
+            createNameLetters();
+            createTitleLetters();
+            animateBiography();
+            
+            // Запускаем анимацию футера через 1.5 секунды
+            setTimeout(animateFooter, 1500);
+            
+            // Запускаем анимацию имени через 1.5 секунды
+            setTimeout(animateName, 1500);
+        });
+        
+        function checkScroll() {
+            const galleryHeader = document.querySelector('.gallery-header');
+            const gallerySection = document.querySelector('.gallery-section');
+            
+            if (!galleryHeader.classList.contains('visible')) {
+                const sectionTop = gallerySection.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (sectionTop < windowHeight * 0.8) {
+                    galleryHeader.classList.add('visible');
+                    // Запускаем анимацию заголовка когда секция становится видимой
+                    setTimeout(() => {
+                        const titleLetters = document.querySelectorAll('.title-letters');
+                        titleLetters.forEach((letter, index) => {
+                            setTimeout(() => {
+                                letter.classList.add('visible');
+                                letter.style.animation = `textGlow 0.6s ease-out ${index * 0.1}s forwards`;
+                            }, index * 100);
+                        });
+                        
+                        // Анимируем появление описания после заголовка
+                        setTimeout(() => {
+                            document.getElementById('descriptionText').classList.add('visible');
+                        }, titleLetters.length * 100 + 500);
+                    }, 300);
+                }
+            }
+        }
+
+        function checkThirdBlock() {
+            const thirdBlock = document.querySelector('.third_block');
+            const headerBlock = document.querySelector('.header-block');
+            
+            if (thirdBlock && headerBlock && !headerBlock.classList.contains('animated')) {
+                const blockTop = thirdBlock.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (blockTop < windowHeight * 0.8) {
+                    headerBlock.style.animation = 'neonRise 2s ease-out forwards';
+                    headerBlock.classList.add('animated');
+                }
+            }
+        }
+
+        // Слушатель прокрутки
+        window.addEventListener('scroll', function() {
+            checkScroll();
+            checkThirdBlock();
+        });
+
+        // Проверяем при загрузке на случай если страница уже прокручена
+        window.addEventListener('load', function() {
+            checkScroll();
+            checkThirdBlock();
+        });
+
+        // Добавляем анимацию для букв заголовка
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes textGlow {
+                0% {
+                    opacity: 0;
+                    transform: translateY(20px);
+                    text-shadow: 0 0 0px rgba(233, 69, 96, 0);
+                }
+                50% {
+                    text-shadow: 0 0 20px rgba(233, 69, 96, 0.8);
+                }
+                100% {
+                    opacity: 1;
+                    transform: translateY(0);
+                    text-shadow: 0 0 10px rgba(233, 69, 96, 0.5);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
